@@ -1,7 +1,7 @@
 package nota.player;
 
-import net.minecraft.entity.player.PlayerEntity;
 
+import net.minecraft.world.entity.player.Player;
 import nota.model.Playlist;
 import nota.model.Song;
 
@@ -38,6 +38,6 @@ public abstract class RangeSongPlayer extends SongPlayer {
 	 * @param player in range
 	 * @return ability to hear the current RangeSongPlayer
 	 */
-	public abstract boolean isInRange(PlayerEntity player);
+	public abstract boolean isInRange(Player player);
 
 }
