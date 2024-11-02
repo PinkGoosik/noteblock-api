@@ -1,8 +1,8 @@
 package nota.utils;
 
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import nota.model.Sound;
-import net.minecraft.block.enums.Instrument;
-import net.minecraft.sound.SoundEvent;
 
 /**
  * Various methods for working with instruments
@@ -140,42 +140,42 @@ public class InstrumentUtils {
 	 * @param instrument
 	 * @return Instrument enum (for the current server version)
 	 */
-	public static Instrument getBukkitInstrument(byte instrument) {
+	public static NoteBlockInstrument getBukkitInstrument(byte instrument) {
 		switch(instrument) {
 			case 0:
-				return Instrument.HARP;
+				return NoteBlockInstrument.HARP;
 			case 1:
-				return Instrument.BASS;
+				return NoteBlockInstrument.BASS;
 			case 2:
-				return Instrument.BASEDRUM;
+				return NoteBlockInstrument.BASEDRUM;
 			case 3:
-				return Instrument.SNARE;
+				return NoteBlockInstrument.SNARE;
 			case 4:
-				return Instrument.HAT;
+				return NoteBlockInstrument.HAT;
 			case 5:
-				return Instrument.GUITAR;
+				return NoteBlockInstrument.GUITAR;
 			case 6:
-				return Instrument.FLUTE;
+				return NoteBlockInstrument.FLUTE;
 			case 7:
-				return Instrument.BELL;
+				return NoteBlockInstrument.BELL;
 			case 8:
-				return Instrument.CHIME;
+				return NoteBlockInstrument.CHIME;
 			case 9:
-				return Instrument.XYLOPHONE;
+				return NoteBlockInstrument.XYLOPHONE;
 			case 10:
-				return Instrument.IRON_XYLOPHONE;
+				return NoteBlockInstrument.IRON_XYLOPHONE;
 			case 11:
-				return Instrument.COW_BELL;
+				return NoteBlockInstrument.COW_BELL;
 			case 12:
-				return Instrument.DIDGERIDOO;
+				return NoteBlockInstrument.DIDGERIDOO;
 			case 13:
-				return Instrument.BIT;
+				return NoteBlockInstrument.BIT;
 			case 14:
-				return Instrument.BANJO;
+				return NoteBlockInstrument.BANJO;
 			case 15:
-				return Instrument.PLING;
+				return NoteBlockInstrument.PLING;
 		}
-		return Instrument.HARP;
+		return NoteBlockInstrument.HARP;
 	}
 
 	/**

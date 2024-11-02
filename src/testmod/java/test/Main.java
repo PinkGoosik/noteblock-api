@@ -1,5 +1,10 @@
 package test;
 
+import com.mojang.brigadier.Command;
+import net.minecraft.commands.Commands;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.player.Player;
 import nota.Nota;
 import nota.event.SongEndEvent;
 import nota.event.SongStartEvent;
@@ -12,10 +17,6 @@ import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.metadata.ModMetadata;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.server.command.CommandManager;
-import net.minecraft.text.Text;
-import net.minecraft.util.Identifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -53,14 +54,14 @@ public class Main implements ModInitializer {
 		}
 
 		CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> {
-			dispatcher.register(CommandManager.literal("start-song").executes(context -> {
+			dispatcher.register(Commands.literal("start-song").executes(context -> {
 				var player = context.getSource().getPlayer();
 				if(player != null && songPlayer == null) {
-					var world = player.world;
-					if(!world.isClient) {
+					var world = player.level();
+					if(!world.isClientSide) {
 						songPlayer = new PositionSongPlayer(new Playlist(vitality, home, bad_apple, rush_e, tetris_b_theme, merry_go_round_of_life), world);
-						songPlayer.setId(new Identifier("test:position"));
-						songPlayer.setBlockPos(player.getBlockPos());
+						songPlayer.setId(ResourceLocation.parse("test:position"));
+						songPlayer.setBlockPos(player.blockPosition());
 						songPlayer.addPlayer(player);
 						songPlayer.setRepeatMode(RepeatMode.NONE);
 						songPlayer.setPlaying(true);
@@ -68,7 +69,7 @@ public class Main implements ModInitializer {
 				}
 				return 1;
 			}));
-			dispatcher.register(CommandManager.literal("toggle-song").executes(context -> {
+			dispatcher.register(Commands.literal("toggle-song").executes(context -> {
 				if(songPlayer != null) {
 					songPlayer.setPlaying(!songPlayer.isPlaying());
 				}
@@ -77,11 +78,11 @@ public class Main implements ModInitializer {
 		});
 
 		SongStartEvent.EVENT.register(sp -> {
-			if(sp.getId().equals(new Identifier("test:position"))) {
+			if(sp.getId().equals(ResourceLocation.parse("test:position"))) {
 				for(UUID uuid : sp.getPlayerUUIDs()) {
-					PlayerEntity player = Nota.getAPI().getServer().getPlayerManager().getPlayer(uuid);
+					Player player = Nota.getAPI().getServer().getPlayerList().getPlayer(uuid);
 					if(player != null) {
-						player.sendMessage(Text.of("Song Started Playing: " + sp.getSong().getTitle()));
+						player.sendSystemMessage(Component.literal("Song Started Playing: " + sp.getSong().getTitle()));
 					}
 				}
 			}
@@ -89,11 +90,11 @@ public class Main implements ModInitializer {
 		});
 
 		SongEndEvent.EVENT.register(sp -> {
-			if(sp.getId().equals(new Identifier("test:position"))) {
+			if(sp.getId().equals(ResourceLocation.parse("test:position"))) {
 				for(UUID uuid : sp.getPlayerUUIDs()) {
-					PlayerEntity player = Nota.getAPI().getServer().getPlayerManager().getPlayer(uuid);
+					Player player = Nota.getAPI().getServer().getPlayerList().getPlayer(uuid);
 					if(player != null) {
-						player.sendMessage(Text.of("Song Ended Playing: " + sp.getSong().getTitle()));
+						player.sendSystemMessage(Component.literal("Song Ended Playing: " + sp.getSong().getTitle()));
 					}
 				}
 			}

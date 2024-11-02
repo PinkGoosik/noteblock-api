@@ -1,5 +1,5 @@
 plugins {
-	id "fabric-loom" version "1.2-SNAPSHOT"
+	id "fabric-loom" version "1.7-SNAPSHOT"
 	id "io.github.juuxel.loom-quiltflower" version "1.8.0"
 }
 
@@ -39,7 +39,10 @@ repositories {
 
 dependencies {
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
-	mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
+	mappings(loom.layered {
+		officialMojangMappings()
+		parchment("org.parchmentmc.data:parchment-1.21:${project.properties["parchment_version"]}")
+	})
 
 	modImplementation "net.fabricmc:fabric-loader:${project.fabric_loader}"
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api}"

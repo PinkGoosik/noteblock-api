@@ -2,9 +2,9 @@
 
 <img align="right" width="100" src="src/main/resources/assets/nota/icon.png">
 
-Port of the NoteBlock API for fabric, play .nbs files as noteblock sounds. 
-This port is not complete replica, some features are missing or unfinished. 
-You can find original spigot plugin [here](https://www.spigotmc.org/resources/noteblockapi.19287/). 
+Port of the NoteBlock API for fabric, play .nbs files as noteblock sounds.
+This port is not complete replica, some features are missing or unfinished.
+You can find original spigot plugin [here](https://www.spigotmc.org/resources/noteblockapi.19287/).
 This library can be used server-side only or in singleplayer.
 
 ### Development
@@ -53,7 +53,7 @@ Plays song for all added players no matter where they are.
 ```java
 Song song; // Preloaded song
 RadioSongPlayer rsp = new RadioSongPlayer(song); // Create RadioSongPlayer.
-rsp.setId(new Identifier("example:radio")); // Set unique identifier, not necessary
+rsp.setId(new ResourceLocation("example:radio")); // Set unique identifier, not necessary
 rsp.addPlayer(player); // Add player to SongPlayer so they will hear the song.
 rsp.setPlaying(true); // Start RadioSongPlayer playback
 ```
@@ -64,7 +64,7 @@ Plays song for all added players in specified range from specified point.
 ```java
 Song song; // Preloaded song
 PositionSongPlayer psp = new PositionSongPlayer(song); // Create PositionSongPlayer.
-psp.setId(new Identifier("example:position")); // Set unique identifier, not necessary
+psp.setId(new ResourceLocation("example:position")); // Set unique identifier, not necessary
 psp.setBlockPos(pos); // Set location where the song will be playing
 psp.setDistance(16); // Set distance from target location in which players will hear the SongPlayer, default: 16
 psp.addPlayer(player); // Add player to SongPlayer so they will hear the song.
@@ -77,7 +77,7 @@ Plays song for all added players in specified range from specified entity.
 ```java
 Song song; // Preloaded song
 EntitySongPlayer esp = new EntitySongPlayer(song); // Create EntitySongPlayer.
-esp.setId(new Identifier("example:entity")); // Set unique identifier, not necessary
+esp.setId(new ResourceLocation("example:entity")); // Set unique identifier, not necessary
 esp.setEntity(entity); // Set entity which position will be used
 esp.setDistance(16); // Set distance from target location in which players will hear the SongPlayer, default: 16
 esp.addPlayer(player); // Add player to SongPlayer so they will hear the song.

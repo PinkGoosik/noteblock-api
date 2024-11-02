@@ -1,5 +1,7 @@
 package nota.player;
 
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.player.Player;
 import nota.Nota;
 import nota.event.SongStartEvent;
 import nota.event.SongEndEvent;
@@ -9,8 +11,6 @@ import nota.model.RepeatMode;
 import nota.model.Song;
 import nota.model.playmode.ChannelMode;
 import nota.model.playmode.MonoMode;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.Identifier;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -20,7 +20,7 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 @SuppressWarnings("unused")
 public abstract class SongPlayer {
-	Identifier id = new Identifier("noteblock-api:unidentified");
+	ResourceLocation id = ResourceLocation.parse("noteblock-api:unidentified");
 
 	protected Song song;
 	protected Playlist playlist;
@@ -79,7 +79,7 @@ public abstract class SongPlayer {
 
 	private void play() {
 		for(UUID uuid : playerList.keySet()) {
-			PlayerEntity player = Nota.getAPI().getServer().getPlayerManager().getPlayer(uuid);
+			Player player = Nota.getAPI().getServer().getPlayerList().getPlayer(uuid);
 			if(player != null) {
 				this.playTick(player, tick);
 			}
@@ -130,7 +130,7 @@ public abstract class SongPlayer {
 			}
 			SongTickEvent.EVENT.invoker().onSongTick(this);
 			for(UUID uuid : playerList.keySet()) {
-				PlayerEntity player = Nota.getAPI().getServer().getPlayerManager().getPlayer(uuid);
+				Player player = Nota.getAPI().getServer().getPlayerList().getPlayer(uuid);
 				if(player != null) {
 					this.playTick(player, tick);
 				}
@@ -155,7 +155,7 @@ public abstract class SongPlayer {
 	 *
 	 * @return song player's unique id
 	 */
-	public Identifier getId() {
+	public ResourceLocation getId() {
 		return this.id;
 	}
 
@@ -163,7 +163,7 @@ public abstract class SongPlayer {
 	 * Sets unique id for this SongPlayer
 	 *
 	 */
-	public void setId(Identifier id) {
+	public void setId(ResourceLocation id) {
 		this.id = id;
 	}
 
@@ -182,8 +182,8 @@ public abstract class SongPlayer {
 	 *
 	 * @param player player entity
 	 */
-	public void addPlayer(PlayerEntity player) {
-		addPlayer(player.getUuid());
+	public void addPlayer(Player player) {
+		addPlayer(player.getUUID());
 	}
 
 	/**
@@ -229,7 +229,7 @@ public abstract class SongPlayer {
 	 * @param player to play this SongPlayer for
 	 * @param tick   to play at
 	 */
-	public abstract void playTick(PlayerEntity player, int tick);
+	public abstract void playTick(Player player, int tick);
 
 	/**
 	 * SongPlayer will destroy itself
@@ -281,8 +281,8 @@ public abstract class SongPlayer {
 	 *
 	 * @param player to remove
 	 */
-	public void removePlayer(PlayerEntity player) {
-		removePlayer(player.getUuid());
+	public void removePlayer(Player player) {
+		removePlayer(player.getUUID());
 	}
 
 	/**

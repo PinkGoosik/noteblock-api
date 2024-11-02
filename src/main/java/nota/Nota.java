@@ -1,9 +1,9 @@
 package nota;
 
+import net.minecraft.world.entity.player.Player;
 import nota.player.SongPlayer;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.MinecraftServer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,8 +33,8 @@ public class Nota implements ModInitializer {
 	 * @param player player entity
 	 * @return is receiving a song
 	 */
-	public static boolean isReceivingSong(PlayerEntity player) {
-		return isReceivingSong(player.getUuid());
+	public static boolean isReceivingSong(Player player) {
+		return isReceivingSong(player.getUUID());
 	}
 
 	/**
@@ -53,8 +53,8 @@ public class Nota implements ModInitializer {
 	 *
 	 * @param player player entity
 	 */
-	public static void stopPlaying(PlayerEntity player) {
-		stopPlaying(player.getUuid());
+	public static void stopPlaying(Player player) {
+		stopPlaying(player.getUUID());
 	}
 
 	/**
@@ -78,8 +78,8 @@ public class Nota implements ModInitializer {
 	 * @param player player entity
 	 * @param volume volume
 	 */
-	public static void setPlayerVolume(PlayerEntity player, byte volume) {
-		setPlayerVolume(player.getUuid(), volume);
+	public static void setPlayerVolume(Player player, byte volume) {
+		setPlayerVolume(player.getUUID(), volume);
 	}
 
 	/**
@@ -98,8 +98,8 @@ public class Nota implements ModInitializer {
 	 * @param player player entity
 	 * @return volume (byte)
 	 */
-	public static byte getPlayerVolume(PlayerEntity player) {
-		return getPlayerVolume(player.getUuid());
+	public static byte getPlayerVolume(Player player) {
+		return getPlayerVolume(player.getUUID());
 	}
 
 	/**
@@ -118,16 +118,16 @@ public class Nota implements ModInitializer {
 		}
 	}
 
-	public static ArrayList<SongPlayer> getSongPlayersByPlayer(PlayerEntity player) {
-		return getSongPlayersByPlayer(player.getUuid());
+	public static ArrayList<SongPlayer> getSongPlayersByPlayer(Player player) {
+		return getSongPlayersByPlayer(player.getUUID());
 	}
 
 	public static ArrayList<SongPlayer> getSongPlayersByPlayer(UUID playerUuid) {
 		return instance.playingSongs.get(playerUuid);
 	}
 
-	public static void setSongPlayersByPlayer(PlayerEntity player, ArrayList<SongPlayer> songs) {
-		setSongPlayersByPlayer(player.getUuid(), songs);
+	public static void setSongPlayersByPlayer(Player player, ArrayList<SongPlayer> songs) {
+		setSongPlayersByPlayer(player.getUUID(), songs);
 	}
 
 	public static void setSongPlayersByPlayer(UUID playerUuid, ArrayList<SongPlayer> songs) {
